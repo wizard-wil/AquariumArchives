@@ -1,0 +1,85 @@
+@page "/register"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@using System.ComponentModel.DataAnnotations
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using AquariumArchives.Models
+@inject ProtectedLocalStorage Local
+@inject NavigationManager Nav
+
+<PageTitle>Create account</PageTitle>
+
+<h1>Create account</h1>
+
+<EditForm Model="model" OnValidSubmit="SubmitAsync" style="max-width: 24rem;">
+    <DataAnnotationsValidator />
+
+    @if (error != null)
+    {
+        <div class="alert alert-danger" role="alert">@error</div>
+    }
+
+    <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <InputText id="username" class="form-control" @bind-Value="model.Username" autocomplete="username" />
+        <ValidationMessage For="() => model.Username" />
+    </div>
+
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <InputText id="email" type="email" class="form-control" @bind-Value="model.Email" autocomplete="email" />
+        <ValidationMessage For="() => model.Email" />
+    </div>
+
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <InputText id="password" type="password" class="form-control" @bind-Value="model.Password" autocomplete="new-password" />
+        <ValidationMessage For="() => model.Password" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Create account</button>
+</EditForm>
+
+<p class="mt-3">Already have an account? <a href="login">Log in</a></p>
+
+@code {
+    private RegisterModel model = new();
+    private string? error;
+
+    private async Task SubmitAsync()
+    {
+        var acc = await Local.GetAsync<List<User>>("accounts");
+        var accounts = acc.Success && acc.Value != null ? acc.Value : new List<User>();
+
+        var name = model.Username.Trim();
+        if (accounts.Any(u => u.username.Equals(name, StringComparison.OrdinalIgnoreCase)))
+        {
+            error = "That username is taken. Choose another.";
+            return;
+        }
+
+        accounts.Add(new User
+            {
+                Id = accounts.Count + 1,
+                username = name,
+                email = model.Email.Trim(),
+                password = model.Password
+            });
+
+        await Local.SetAsync("accounts", accounts);
+        await Local.SetAsync("session", name);
+        Nav.NavigateTo("/");
+    }
+
+    private class RegisterModel
+    {
+        [Required(ErrorMessage = "Choose a username.")]
+        public string Username { get; set; } = "";
+
+        [Required(ErrorMessage = "Enter your email.")]
+        [EmailAddress(ErrorMessage = "Enter a valid email address, like name@example.com.")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Choose a password.")]
+        public string Password { get; set; } = "";
+    }
+}

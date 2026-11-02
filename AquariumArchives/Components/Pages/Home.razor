@@ -1,7 +1,122 @@
-﻿@page "/"
+@page "/"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using AquariumArchives.Models
+@inject ProtectedLocalStorage Local
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Aquarium Archives</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Aquarium Archives</h1>
 
-Welcome to your new app.
+@if (!loaded)
+{
+    <p>Loading…</p>
+}
+else if (user is null)
+{
+    <p class="lead">Get a new fish every day and build your collection.</p>
+    <a class="btn btn-primary me-2" href="register">Create account</a>
+    <a class="btn btn-outline-primary" href="login">Log in</a>
+}
+else
+{
+    <p class="lead">Welcome, @user.username.</p>
+
+    @if (fish is null)
+    {
+        <button class="btn btn-primary" @onclick="RevealAsync">Reveal today's fish</button>
+    }
+    else
+    {
+        <div class="card mb-3" style="max-width: 22rem;">
+            @if (HasPhoto(fish))
+            {
+                <img src="@fish.Photo_URL" class="card-img-top" alt="@fish.Name" />
+            }
+            else
+            {
+                <div class="card-img-top bg-light text-center fs-1 py-4" aria-hidden="true">🐟</div>
+            }
+            <div class="card-body">
+                @if (!string.IsNullOrEmpty(message))
+                {
+                    <p class="text-success fw-semibold mb-1">@message</p>
+                }
+                <h5 class="card-title">@fish.Name</h5>
+                @if (!string.IsNullOrWhiteSpace(fish.Description))
+                {
+                    <p class="card-text">@fish.Description</p>
+                }
+            </div>
+        </div>
+        <p class="text-muted">Come back tomorrow for a new fish.</p>
+    }
+
+    <p class="mt-3">
+        <a href="collection">My collection</a> |
+        <a href="facts">Fish facts</a> |
+        <button class="btn btn-link p-0 align-baseline" @onclick="LogOutAsync">Log out</button>
+    </p>
+}
+
+@code {
+    private List<User> accounts = new();
+    private User? user;
+    private Fish? fish;
+    private string message = "";
+    private bool loaded;
+
+    private static string Today => DateTime.Now.ToString("yyyy-MM-dd");
+
+    private static bool HasPhoto(Fish f) =>
+        !string.IsNullOrWhiteSpace(f.Photo_URL) && (f.Photo_URL.Contains('.') || f.Photo_URL.Contains('/'));
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var acc = await Local.GetAsync<List<User>>("accounts");
+        accounts = acc.Success && acc.Value != null ? acc.Value : new List<User>();
+
+        var session = await Local.GetAsync<string>("session");
+        user = session.Success ? accounts.FirstOrDefault(u => u.username == session.Value) : null;
+
+        if (user != null)
+        {
+            var daily = await Local.GetAsync<string>($"daily:{user.username}");
+            if (daily.Success && daily.Value != null)
+            {
+                var parts = daily.Value.Split(':');
+                if (parts.Length == 2 && parts[0] == Today && int.TryParse(parts[1], out var id))
+                    fish = SampleData.list.FirstOrDefault(f => f.Id == id);
+            }
+        }
+
+        loaded = true;
+        StateHasChanged();
+    }
+
+    private async Task RevealAsync()
+    {
+        var all = SampleData.list;
+        var unowned = all.Where(f => !user!.FishCollection.Contains(f.Id)).ToList();
+        var isNew = unowned.Count > 0;
+        var pool = isNew ? unowned : all;
+        var pick = pool[Random.Shared.Next(pool.Count)];
+
+        if (isNew) user!.FishCollection.Add(pick.Id);
+        await Local.SetAsync("accounts", accounts);
+        await Local.SetAsync($"daily:{user!.username}", $"{Today}:{pick.Id}");
+
+        fish = pick;
+        message = isNew ? "New find! Added to your collection." : "You already had this one.";
+    }
+
+    private async Task LogOutAsync()
+    {
+        await Local.DeleteAsync("session");
+        user = null;
+        fish = null;
+        message = "";
+    }
+}
