@@ -5,6 +5,7 @@
 @using AquariumArchives.Models
 @inject ProtectedLocalStorage Local
 @inject NavigationManager Nav
+@inject DatabaseService Db
 
 <PageTitle>Log in</PageTitle>
 
@@ -41,14 +42,9 @@
 
     private async Task SubmitAsync()
     {
-        var acc = await Local.GetAsync<List<User>>("accounts");
-        var accounts = acc.Success && acc.Value != null ? acc.Value : new List<User>();
+        var user = await Db.GetUserByUsernameAsync(model.Username.Trim());
 
-        var name = model.Username.Trim();
-        var user = accounts.FirstOrDefault(u =>
-            u.username.Equals(name, StringComparison.OrdinalIgnoreCase) && u.password == model.Password);
-
-        if (user is null)
+        if (user is null || user.password != model.Password)
         {
             error = "That username and password don't match. Check both and try again.";
             return;

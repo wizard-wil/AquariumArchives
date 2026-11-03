@@ -5,6 +5,7 @@
 @using AquariumArchives.Models
 @inject ProtectedLocalStorage Local
 @inject NavigationManager Nav
+@inject DatabaseService Db
 
 <PageTitle>Create account</PageTitle>
 
@@ -47,26 +48,15 @@
 
     private async Task SubmitAsync()
     {
-        var acc = await Local.GetAsync<List<User>>("accounts");
-        var accounts = acc.Success && acc.Value != null ? acc.Value : new List<User>();
-
         var name = model.Username.Trim();
-        if (accounts.Any(u => u.username.Equals(name, StringComparison.OrdinalIgnoreCase)))
+        var user = await Db.TryCreateUserAsync(name, model.Email.Trim(), model.Password);
+        if (user is null)
         {
             error = "That username is taken. Choose another.";
             return;
         }
 
-        accounts.Add(new User
-            {
-                Id = accounts.Count + 1,
-                username = name,
-                email = model.Email.Trim(),
-                password = model.Password
-            });
-
-        await Local.SetAsync("accounts", accounts);
-        await Local.SetAsync("session", name);
+        await Local.SetAsync("session", user.username);
         Nav.NavigateTo("/");
     }
 

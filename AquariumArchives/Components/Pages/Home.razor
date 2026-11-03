@@ -3,6 +3,7 @@
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @using AquariumArchives.Models
 @inject ProtectedLocalStorage Local
+@inject DatabaseService Db
 
 <PageTitle>Aquarium Archives</PageTitle>
 
@@ -60,7 +61,7 @@ else
 }
 
 @code {
-    private List<User> accounts = new();
+    private List<Fish> allFish = new();
     private User? user;
     private Fish? fish;
     private string message = "";
@@ -75,21 +76,14 @@ else
     {
         if (!firstRender) return;
 
-        var acc = await Local.GetAsync<List<User>>("accounts");
-        accounts = acc.Success && acc.Value != null ? acc.Value : new List<User>();
-
         var session = await Local.GetAsync<string>("session");
-        user = session.Success ? accounts.FirstOrDefault(u => u.username == session.Value) : null;
+        user = session.Success && session.Value != null ? await Db.GetUserByUsernameAsync(session.Value) : null;
 
         if (user != null)
         {
-            var daily = await Local.GetAsync<string>($"daily:{user.username}");
-            if (daily.Success && daily.Value != null)
-            {
-                var parts = daily.Value.Split(':');
-                if (parts.Length == 2 && parts[0] == Today && int.TryParse(parts[1], out var id))
-                    fish = SampleData.list.FirstOrDefault(f => f.Id == id);
-            }
+            allFish = await Db.GetAllFishAsync();
+            if (user.DailyDate == Today)
+                fish = allFish.FirstOrDefault(f => f.Id == user.DailyFishId);
         }
 
         loaded = true;
@@ -98,15 +92,18 @@ else
 
     private async Task RevealAsync()
     {
-        var all = SampleData.list;
+        var all = allFish;
         var unowned = all.Where(f => !user!.FishCollection.Contains(f.Id)).ToList();
         var isNew = unowned.Count > 0;
         var pool = isNew ? unowned : all;
         var pick = pool[Random.Shared.Next(pool.Count)];
 
-        if (isNew) user!.FishCollection.Add(pick.Id);
-        await Local.SetAsync("accounts", accounts);
-        await Local.SetAsync($"daily:{user!.username}", $"{Today}:{pick.Id}");
+        if (isNew)
+        {
+            user!.FishCollection.Add(pick.Id);
+            await Db.AddFishToUserAsync(user.Id, pick.Id);
+        }
+        await Db.SetDailyFishAsync(user!.Id, Today, pick.Id);
 
         fish = pick;
         message = isNew ? "New find! Added to your collection." : "You already had this one.";

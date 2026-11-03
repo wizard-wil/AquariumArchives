@@ -13,5 +13,8 @@ namespace AquariumArchives.Models
         public string email { get; set; }
 
         public List<int> FishCollection { get; set; } = new();
+        // Today's reveal, saved on the account so it follows the user across devices.
+        public string DailyDate { get; set; } = "";
+        public int DailyFishId { get; set; }
     }
 }
