@@ -1,0 +1,247 @@
+﻿:root {
+    --ocean-deep: #04121f;
+    --ocean-mid: #0a2540;
+    --ocean-surface: #0f3556;
+    --ocean-card: rgba(14, 49, 82, 0.65);
+    --ocean-border: rgba(94, 234, 212, 0.18);
+    --glow: #5eead4;
+    --glow-soft: rgba(94, 234, 212, 0.35);
+    --text: #dbeafe;
+    --text-muted: #8fb3d1;
+}
+
+html, body {
+    min-height: 100%;
+}
+
+body {
+    color: var(--text);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: radial-gradient(1200px 600px at 80% -10%, rgba(45, 212, 191, 0.14), transparent 60%), radial-gradient(900px 500px at -10% 110%, rgba(56, 189, 248, 0.12), transparent 60%), linear-gradient(180deg, var(--ocean-mid) 0%, var(--ocean-deep) 100%);
+    background-attachment: fixed;
+}
+
+::selection {
+    background: var(--glow-soft);
+    color: #fff;
+}
+
+/* Text */
+h1 {
+    color: #fff;
+    font-weight: 300;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 24px var(--glow-soft);
+    margin-bottom: 1rem;
+}
+
+h5, .card-title {
+    color: #fff;
+}
+
+.lead {
+    color: var(--text-muted);
+    font-weight: 300;
+}
+
+.text-muted {
+    color: var(--text-muted) !important;
+}
+
+.text-success {
+    color: #6ee7b7 !important;
+}
+
+a {
+    color: var(--glow);
+    text-decoration: none;
+}
+
+    a:hover {
+        color: #99f6e4;
+        text-decoration: underline;
+    }
+
+/* Buttons */
+.btn-primary {
+    --bs-btn-color: #04121f;
+    --bs-btn-bg: var(--glow);
+    --bs-btn-border-color: var(--glow);
+    --bs-btn-hover-color: #04121f;
+    --bs-btn-hover-bg: #99f6e4;
+    --bs-btn-hover-border-color: #99f6e4;
+    --bs-btn-active-color: #04121f;
+    --bs-btn-active-bg: #2dd4bf;
+    --bs-btn-active-border-color: #2dd4bf;
+    --bs-btn-focus-shadow-rgb: 94, 234, 212;
+    font-weight: 600;
+    box-shadow: 0 0 18px var(--glow-soft);
+}
+
+.btn-outline-primary {
+    --bs-btn-color: var(--glow);
+    --bs-btn-border-color: var(--glow);
+    --bs-btn-hover-color: #04121f;
+    --bs-btn-hover-bg: var(--glow);
+    --bs-btn-hover-border-color: var(--glow);
+    --bs-btn-active-color: #04121f;
+    --bs-btn-active-bg: #2dd4bf;
+    --bs-btn-active-border-color: #2dd4bf;
+    --bs-btn-focus-shadow-rgb: 94, 234, 212;
+}
+
+.btn-link {
+    --bs-btn-color: var(--glow);
+    --bs-btn-hover-color: #99f6e4;
+}
+
+/* Cards */
+.card {
+    --bs-card-bg: var(--ocean-card);
+    --bs-card-color: var(--text);
+    --bs-card-border-color: var(--ocean-border);
+    border-radius: 1rem;
+    overflow: hidden;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+    .card:hover {
+        transform: translateY(-4px);
+        border-color: var(--glow);
+        box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45), 0 0 22px var(--glow-soft);
+    }
+
+.card-img-top.bg-light {
+    background: linear-gradient(160deg, var(--ocean-surface), var(--ocean-mid)) !important;
+}
+
+/* Forms */
+.form-label {
+    color: var(--text-muted);
+}
+
+.form-control {
+    background-color: rgba(4, 18, 31, 0.6);
+    border-color: var(--ocean-border);
+    color: var(--text);
+}
+
+    .form-control:focus {
+        background-color: rgba(4, 18, 31, 0.8);
+        color: #fff;
+        border-color: var(--glow);
+        box-shadow: 0 0 0 0.2rem var(--glow-soft);
+    }
+
+.validation-message {
+    color: #fca5a5;
+}
+
+.alert-danger {
+    background: rgba(127, 29, 29, 0.35);
+    border-color: rgba(252, 165, 165, 0.4);
+    color: #fecaca;
+}
+
+/* Center the whole site */
+body > div:not(#blazor-error-ui) {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+/* Keep form labels and inputs left-aligned inside the centered column */
+form {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+/* Center single cards and the fish grids */
+.card {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.row {
+    justify-content: center;
+}
+
+/* Direct overrides (older Bootstrap ignores the variables above) */
+.card {
+    background-color: var(--ocean-card);
+    color: var(--text);
+    border: 1px solid var(--ocean-border);
+}
+
+.card-body {
+    background: transparent;
+}
+
+.btn-primary {
+    background-color: var(--glow);
+    border-color: var(--glow);
+    color: #04121f;
+}
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+        background-color: #99f6e4;
+        border-color: #99f6e4;
+        color: #04121f;
+    }
+
+.btn-outline-primary {
+    background-color: transparent;
+    border-color: var(--glow);
+    color: var(--glow);
+}
+
+    .btn-outline-primary:hover,
+    .btn-outline-primary:focus {
+        background-color: var(--glow);
+        border-color: var(--glow);
+        color: #04121f;
+    }
+
+.btn-link {
+    color: var(--glow);
+}
+
+    .btn-link:hover {
+        color: #99f6e4;
+    }
+
+}
+
+article.content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-bottom: 8vh; /* nudges content slightly above true center, which looks better */
+}
+
+.center-stage {
+    width: 100%;
+}
+/* Center the site horizontally, and sit it lower on the screen */
+.page {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+article.content {
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.center-stage {
+    width: 100%;
+    padding-top: 22vh;
+}

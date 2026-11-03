@@ -1,5 +1,9 @@
 @page "/facts"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
 @using AquariumArchives.Models
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage Local
+@inject NavigationManager Nav
 @inject DatabaseService Db
 
 <PageTitle>Fish facts</PageTitle>
@@ -27,12 +31,45 @@
     }
 </div>
 
-<p class="mt-3"><a href="">Today's fish</a> | <a href="collection">My collection</a></p>
+<p class="mt-3">
+    <a href="">Today's fish</a> | <a href="collection">My collection</a>
+    @if (loggedIn)
+    {
+        <text> | </text>
+
+        <button class="btn btn-link p-0 align-baseline" @onclick="LogOutAsync">Log out</button>
+    }
+</p>
 
 @code {
     private List<Fish> allFish = new();
 
     protected override async Task OnInitializedAsync() =>
         allFish = await Db.GetAllFishAsync();
+
+    private bool loggedIn;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        try
+        {
+            var session = await Local.GetAsync<string>("session");
+            loggedIn = session.Success && session.Value != null;
+        }
+        catch
+        {
+            loggedIn = false;
+        }
+
+        StateHasChanged();
+    }
+
+    private async Task LogOutAsync()
+    {
+        await Local.DeleteAsync("session");
+        Nav.NavigateTo("/");
+    }
 }
 
