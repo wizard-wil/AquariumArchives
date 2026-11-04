@@ -1,0 +1,96 @@
+@page "/collection"
+@rendermode @(new InteractiveServerRenderMode(prerender: false))
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@using AquariumArchives.Models
+@inject ProtectedLocalStorage Local
+@inject DatabaseService Db
+@inject NavigationManager Nav
+
+<PageTitle>My collection</PageTitle>
+
+<h1>My collection</h1>
+
+@if (!loaded)
+{
+    <p>Loading…</p>
+}
+else if (user is null)
+{
+    <p class="lead">Log in to see the fish you've collected.</p>
+    <a class="btn btn-primary" href="login">Log in</a>
+}
+else
+{
+    <p class="lead">@owned of @allFish.Count fish collected</p>
+
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 g-3">
+        @foreach (var f in allFish)
+        {
+            <div class="col">
+                @if (user.FishCollection.Contains(f.Id))
+                {
+                    <div class="card h-100">
+                        @if (HasPhoto(f))
+                        {
+                            <img src="@f.Photo_URL" class="card-img-top" alt="@f.Name" />
+                        }
+                        else
+                        {
+                            <div class="card-img-top bg-light text-center fs-1 py-4" aria-hidden="true">🐟</div>
+                        }
+                        <div class="card-body">
+                            <h5 class="card-title">@f.Name</h5>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="card h-100 text-muted" style="border-style: dashed;">
+                        <div class="card-img-top text-center fs-1 py-4" aria-hidden="true">?</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Not found yet</h5>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+}
+
+<p class="mt-3">
+    <a href="">Today's fish</a> | <a href="facts">Fish facts</a>
+    @if (user is not null)
+    {
+        <text> | </text>
+
+        <button class="btn btn-link p-0 align-baseline" @onclick="LogOutAsync">Log out</button>
+    }
+</p>
+
+@code {
+    private User? user;
+    private List<Fish> allFish = new();
+    private bool loaded;
+    private int owned => user == null ? 0 : allFish.Count(f => user.FishCollection.Contains(f.Id));
+
+    private static bool HasPhoto(Fish f) =>
+        !string.IsNullOrWhiteSpace(f.Photo_URL) && (f.Photo_URL.Contains('.') || f.Photo_URL.Contains('/'));
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender) return;
+
+        var session = await Local.GetAsync<string>("session");
+        user = session.Success && session.Value != null ? await Db.GetUserByUsernameAsync(session.Value) : null;
+        allFish = await Db.GetAllFishAsync();
+
+        loaded = true;
+        StateHasChanged();
+    }
+
+    private async Task LogOutAsync()
+    {
+        await Local.DeleteAsync("session");
+        Nav.NavigateTo("/");
+    }
+}
