@@ -1,4 +1,5 @@
 using AquariumArchives.Components;
+using AquariumArchives.Models;
 
 namespace AquariumArchives
 {
@@ -12,8 +13,9 @@ namespace AquariumArchives
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
+            builder.Services.AddSingleton<DatabaseService>();
             var app = builder.Build();
-
+            app.Services.GetRequiredService<DatabaseService>();
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
