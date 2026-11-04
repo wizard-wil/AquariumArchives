@@ -10,30 +10,43 @@
 
 <h1>Fish facts</h1>
 
-<div class="row row-cols-1 row-cols-lg-2 g-3">
-    @foreach (var f in allFish)
-    {
-        <div class="col">
-            <div class="card h-100">
-                <div class="card-body">
-                    <h5 class="card-title">@f.Name</h5>
-                    @if (string.IsNullOrWhiteSpace(f.Description))
-                    {
-                        <p class="card-text text-muted">No facts added yet.</p>
-                    }
-                    else
-                    {
-                        <p class="card-text">@f.Description</p>
-                    }
-                </div>
-            </div>
+@if (!loaded)
+{
+    <p>Loading…</p>
+}
+else if (facts.Count == 0)
+{
+    <p class="text-muted">No facts added yet.</p>
+}
+else
+{
+    <div class="card mb-3" style="max-width: 32rem;">
+        <div class="card-body">
+            <p class="text-muted small mb-2">Fact @(index + 1) of @facts.Count</p>
+            <p class="card-text fs-5">@facts[index]</p>
         </div>
+    </div>
+
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <p class="text-success fw-semibold">@message</p>
     }
-</div>
+
+    <button class="btn btn-primary" @onclick="NextAsync">
+        @(index == facts.Count - 1 ? "Finish" : "Next fact")
+    </button>
+
+    @if (user is null)
+    {
+        <p class="text-muted mt-2">
+            <a href="login">Log in</a> to earn a fish for reading every fact.
+        </p>
+    }
+}
 
 <p class="mt-3">
     <a href="">Today's fish</a> | <a href="collection">My collection</a>
-    @if (loggedIn)
+    @if (user is not null)
     {
         <text> | </text>
 
@@ -42,12 +55,11 @@
 </p>
 
 @code {
-    private List<Fish> allFish = new();
-
-    protected override async Task OnInitializedAsync() =>
-        allFish = await Db.GetAllFishAsync();
-
-    private bool loggedIn;
+    private readonly List<string> facts = SampleData.Facts;
+    private User? user;
+    private int index;
+    private string message = "";
+    private bool loaded;
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -56,14 +68,57 @@
         try
         {
             var session = await Local.GetAsync<string>("session");
-            loggedIn = session.Success && session.Value != null;
+            user = session.Success && session.Value != null
+                ? await Db.GetUserByUsernameAsync(session.Value)
+                : null;
         }
         catch
         {
-            loggedIn = false;
+            user = null;
         }
 
+        index = (user is null || facts.Count == 0)
+            ? 0
+            : Math.Clamp(user.FactIndex, 0, facts.Count - 1);
+
+        loaded = true;
         StateHasChanged();
+    }
+
+    private async Task NextAsync()
+    {
+        message = "";
+
+        if (index == facts.Count - 1)
+        {
+            // Reached the end of the facts: wrap around and award the fish.
+            index = 0;
+
+            if (user is null)
+            {
+                message = "That's every fact! Log in to earn a fish next time.";
+            }
+            else if (!user.FishCollection.Contains(DatabaseService.FactRewardFishId))
+            {
+                user.FishCollection.Add(DatabaseService.FactRewardFishId);
+                await Db.AddFishToUserAsync(user.Id, DatabaseService.FactRewardFishId);
+                message = "You've read every fact! The Flapjack Octopus has been added to your collection.";
+            }
+            else
+            {
+                message = "That's every fact again. You already have the Flapjack Octopus.";
+            }
+        }
+        else
+        {
+            index++;
+        }
+
+        if (user is not null)
+        {
+            user.FactIndex = index;
+            await Db.SetFactIndexAsync(user.Id, index);
+        }
     }
 
     private async Task LogOutAsync()
@@ -72,4 +127,3 @@
         Nav.NavigateTo("/");
     }
 }
-

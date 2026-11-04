@@ -32,6 +32,18 @@
     </div>
 
     <div class="mb-3">
+        <label for="continent" class="form-label">Continent</label>
+        <InputSelect id="continent" class="form-select" @bind-Value="model.Continent">
+            <option value="">Select your continent…</option>
+            @foreach (var c in DatabaseService.StartingFish.Keys)
+            {
+                <option value="@c">@c</option>
+            }
+    </InputSelect>
+
+    <ValidationMessage For="() => model.Continent" />
+</div>
+    <div class="mb-3">
         <label for="password" class="form-label">Password</label>
         <InputText id="password" type="password" class="form-control" @bind-Value="model.Password" autocomplete="new-password" />
         <ValidationMessage For="() => model.Password" />
@@ -49,7 +61,7 @@
     private async Task SubmitAsync()
     {
         var name = model.Username.Trim();
-        var user = await Db.TryCreateUserAsync(name, model.Email.Trim(), model.Password);
+        var user = await Db.TryCreateUserAsync(name, model.Email.Trim(), model.Password, model.Continent);
         if (user is null)
         {
             error = "That username is taken. Choose another.";
@@ -68,6 +80,9 @@
         [Required(ErrorMessage = "Enter your email.")]
         [EmailAddress(ErrorMessage = "Enter a valid email address, like name@example.com.")]
         public string Email { get; set; } = "";
+           
+        [Required(ErrorMessage = "Which continent are you from?")]
+        public string Continent { get; set; } = "";
 
         [Required(ErrorMessage = "Choose a password.")]
         public string Password { get; set; } = "";

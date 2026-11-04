@@ -32,6 +32,14 @@ namespace AquariumArchives
             app.MapRazorComponents<App>()
                 .AddInteractiveServerRenderMode();
 
+            app.MapGet("/fish-image/{id:int}", async (int id, DatabaseService db) =>
+            {
+                var fish = await db.GetFishImageAsync(id);
+                return fish?.ImageData is { Length: > 0 }
+                    ? Results.File(fish.ImageData, fish.ImageContentType)
+                    : Results.NotFound();
+            });
+
             app.Run();
         }
     }

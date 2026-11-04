@@ -30,9 +30,9 @@ else
                 @if (user.FishCollection.Contains(f.Id))
                 {
                     <div class="card h-100">
-                        @if (HasPhoto(f))
+                        @if (f.HasImage)
                         {
-                            <img src="@f.Photo_URL" class="card-img-top" alt="@f.Name" />
+                            <img src="/fish-image/@f.Id" class="card-img-top" alt="@f.Name" />
                         }
                         else
                         {
@@ -73,8 +73,7 @@ else
     private bool loaded;
     private int owned => user == null ? 0 : allFish.Count(f => user.FishCollection.Contains(f.Id));
 
-    private static bool HasPhoto(Fish f) =>
-        !string.IsNullOrWhiteSpace(f.Photo_URL) && (f.Photo_URL.Contains('.') || f.Photo_URL.Contains('/'));
+
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -82,7 +81,7 @@ else
 
         var session = await Local.GetAsync<string>("session");
         user = session.Success && session.Value != null ? await Db.GetUserByUsernameAsync(session.Value) : null;
-        allFish = await Db.GetAllFishAsync();
+        allFish = (await Db.GetAllFishAsync()).Where(f => !DatabaseService.StartingFish.ContainsValue(f.Id) || (user?.FishCollection.Contains(f.Id) ?? false)).ToList();
 
         loaded = true;
         StateHasChanged();

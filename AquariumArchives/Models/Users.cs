@@ -11,10 +11,10 @@ namespace AquariumArchives.Models
         public string username { get; set; }
         public string password { get; set; }
         public string email { get; set; }
-
+        public string Continent { get; set; } = "";
         public List<int> FishCollection { get; set; } = new();
-        // Today's reveal, saved on the account so it follows the user across devices.
         public string DailyDate { get; set; } = "";
         public int DailyFishId { get; set; }
+        public int FactIndex { get; set; }
     }
 }

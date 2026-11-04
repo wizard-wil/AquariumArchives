@@ -10,4 +10,7 @@
 		<PackageReference Include="MongoDB.Driver" Version="3.13.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<None Update="SeedImages\**" CopyToOutputDirectory="PreserveNewest" />
+	</ItemGroup>
 </Project>

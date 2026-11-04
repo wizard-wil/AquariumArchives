@@ -30,9 +30,9 @@ else
     else
     {
         <div class="card mb-3" style="max-width: 22rem;">
-            @if (HasPhoto(fish))
+            @if (fish.HasImage)   @* in Collection.razor use f.HasImage *@
             {
-                <img src="@fish.Photo_URL" class="card-img-top" alt="@fish.Name" />
+                <img src="/fish-image/@fish.Id" class="card-img-top" alt="@fish.Name" />
             }
             else
             {
@@ -69,8 +69,6 @@ else
 
     private static string Today => DateTime.Now.ToString("yyyy-MM-dd");
 
-    private static bool HasPhoto(Fish f) =>
-        !string.IsNullOrWhiteSpace(f.Photo_URL) && (f.Photo_URL.Contains('.') || f.Photo_URL.Contains('/'));
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -92,7 +90,8 @@ else
 
     private async Task RevealAsync()
     {
-        var all = allFish;
+        var all = allFish.Where(f => DatabaseService.IsRandomPoolFish(f.Id)).ToList();
+        if (all.Count == 0) return;
         var unowned = all.Where(f => !user!.FishCollection.Contains(f.Id)).ToList();
         var isNew = unowned.Count > 0;
         var pool = isNew ? unowned : all;
