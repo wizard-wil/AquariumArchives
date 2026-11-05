@@ -16,11 +16,13 @@ html, body
     min-height: 100%;
 }
 
-body
-{
+body {
     color: var(--text);
     font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
-    background: radial-gradient(1200px 600px at 80% -10%, rgba(45, 212, 191, 0.14), transparent 60%), radial-gradient(900px 500px at -10% 110%, rgba(56, 189, 248, 0.12), transparent 60%), linear-gradient(180deg, var(--ocean-mid) 0%, var(--ocean-deep) 100%);
+    background-image: url("https://www.coralguardian.org/app/uploads/2024/08/Capture-decran-2024-08-08-a-15.13.43-1024x682.jpg"); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
@@ -74,39 +76,23 @@ a:hover
 }
 
 /* Buttons */
-.btn-primary 
+.btn-primary
 {
     --bs-btn-color: #04121f;
     --bs-btn-bg: var(--glow);
-    --bs-btn-border-color: var(--glow);
-    --bs-btn-hover-color: #04121f;
-    --bs-btn-hover-bg: #99f6e4;
-    --bs-btn-hover-border-color: #99f6e4;
-    --bs-btn-active-color: #04121f;
-    --bs-btn-active-bg: #2dd4bf;
-    --bs-btn-active-border-color: #2dd4bf;
     --bs-btn-focus-shadow-rgb: 94, 234, 212;
+    background-color: var(--glow);
+    border-color: var(--glow);
+    color: #04121f;
     font-weight: 600;
-    box-shadow: 0 0 18px var(--glow-soft);
 }
 
 .btn-outline-primary 
 {
-    --bs-btn-color: var(--glow);
-    --bs-btn-border-color: var(--glow);
-    --bs-btn-hover-color: #04121f;
-    --bs-btn-hover-bg: var(--glow);
-    --bs-btn-hover-border-color: var(--glow);
     --bs-btn-active-color: #04121f;
     --bs-btn-active-bg: #2dd4bf;
     --bs-btn-active-border-color: #2dd4bf;
     --bs-btn-focus-shadow-rgb: 94, 234, 212;
-}
-
-.btn-link
-{
-    --bs-btn-color: var(--glow);
-    --bs-btn-hover-color: #99f6e4;
 }
 
 /* Cards */
@@ -115,11 +101,17 @@ a:hover
     --bs-card-bg: var(--ocean-card);
     --bs-card-color: var(--text);
     --bs-card-border-color: var(--ocean-border);
+    --bs-card-border-color: var(--ocean-border);
+    position: relative;
+    background-color: var(--ocean-card);
+    color: var(--text);
+    border: 1px solid var(--ocean-border);
     border-radius: 0;
     overflow: hidden;
-    backdrop-filter: blur(6px);
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35);
     transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    --bubble: rgba(186, 230, 253, 0.06) 0, rgba(186, 230, 253, 0.14) 60%, rgba(224, 242, 254, 0.75) 78%, transparent 84%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .card-img-top.bg-light 
@@ -128,103 +120,43 @@ a:hover
 }
 
 /* Forms */
-.form-label {
+.form-label 
+{
     color: var(--text-muted);
 }
 
-.form-control {
+.form-control 
+{
     background-color: rgba(4, 18, 31, 0.6);
     border-color: var(--ocean-border);
     color: var(--text);
 }
 
-    .form-control:focus {
-        background-color: rgba(4, 18, 31, 0.8);
-        color: #fff;
-        border-color: var(--glow);
-        box-shadow: 0 0 0 0.2rem var(--glow-soft);
-    }
-
-.validation-message {
-    color: #fca5a5;
+.form-control:focus 
+{
+    background-color: rgba(4, 18, 31, 0.8);
+    color: #fff;
+    border-color: var(--glow);
+    box-shadow: 0 0 0 0.2rem var(--glow-soft);
 }
 
-.alert-danger {
+.alert-danger 
+{
     background: rgba(127, 29, 29, 0.35);
     border-color: rgba(252, 165, 165, 0.4);
     color: #fecaca;
 }
 
-/* Center the whole site */
-body > div:not(#blazor-error-ui) {
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    text-align: center;
-}
-
-/* Keep form labels and inputs left-aligned inside the centered column */
-form {
+form 
+{
     margin-left: auto;
     margin-right: auto;
     text-align: left;
 }
 
-/* Center single cards and the fish grids */
-.card {
-    margin-left: auto;
-    margin-right: auto;
-}
-
-.row {
+.row 
+{
     justify-content: center;
-}
-
-/* Direct overrides (older Bootstrap ignores the variables above) */
-.card {
-    background-color: var(--ocean-card);
-    color: var(--text);
-    border: 1px solid var(--ocean-border);
-}
-
-.card-body {
-    background: transparent;
-}
-
-.btn-primary {
-    background-color: var(--glow);
-    border-color: var(--glow);
-    color: #04121f;
-}
-
-    .btn-primary:hover,
-    .btn-primary:focus {
-        background-color: #99f6e4;
-        border-color: #99f6e4;
-        color: #04121f;
-    }
-
-.btn-outline-primary {
-    background-color: transparent;
-    border-color: var(--glow);
-    color: var(--glow);
-}
-
-    .btn-outline-primary:hover,
-    .btn-outline-primary:focus {
-        background-color: var(--glow);
-        border-color: var(--glow);
-        color: #04121f;
-    }
-
-.btn-link 
-{
-    color: var(--glow);
-}
-
-.btn-link:hover 
-{
-    color: #99f6e4;
 }
 
 article.content 
@@ -233,16 +165,7 @@ article.content
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-bottom: 10vh; 
-}
-
-.center-stage 
-{
-    width: 100%;
-}
-
-article.content 
-{
+    padding-bottom: 10vh;
     width: 100%;
     max-width: 960px;
     margin: 0 auto;
@@ -256,12 +179,6 @@ article.content
 }
 
 /*bubble frame for the fish to fit the overall theme*/
-.card 
-{
-    position: relative;
-    --bubble: rgba(186, 230, 253, 0.06) 0, rgba(186, 230, 253, 0.14) 60%, rgba(224, 242, 254, 0.75) 78%, transparent 84%;
-}
-
 .card::before,
 .card::after 
 {
