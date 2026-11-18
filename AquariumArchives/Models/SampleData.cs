@@ -79,41 +79,55 @@ namespace AquariumArchives.Models
             new()
             {
                 Id=11,
+                Name = "Leopard Shark",
+                Description = "The leopard shark (Triakis semifasciata) is a species of houndshark, in the family Triakidae. It is found along the Pacific coast of North America, from the U.S. state of Oregon to Mazatlán in Mexico. Typically measuring 1.2–1.5 m (3.9–4.9 ft) long, this slender-bodied shark is immediately identifiable by the striking pattern of black saddle-like markings and large spots over its back, from which it derives its common name. Large schools of leopard sharks are a common sight in bays and estuaries, swimming over sandy or muddy flats or rock-strewn areas near kelp beds and reefs. They are most common near the coast, in water less than 4 m (13 ft) deep.",
+                ImageFile = "lemonshark.jpg"
+            },
+            new()
+            {
+                Id=12,
+                Name = "Giraffe Catfish",
+                Description = "The giraffe catfish Auchenoglanis occidentalis), or bubu, is a species of catfish found in Africa. It eats plants off the floor of lakes and streams. The diet of giraffe catfish is very dependent upon their environment. They keep an omnivorous diet but mainly eat insects present in the waters.",
+                ImageFile = "giraffe-fish.jpg"
+            },
+            new()
+            {
+                Id=13,
                 Name = "Gar",
                 Description = "Gars are an ancient group of ray-finned fish in the family Lepisosteidae. They comprise seven living species of fish in two genera that inhabit fresh, brackish, and occasionally marine waters of eastern North America, Central America and Cuba in the Caribbean, though extinct members of the family were more widespread. They are the only surviving members of the Ginglymodi, a clade of fish which first appeared during the Triassic period, over 240 million years ago, and are one of only two surviving groups of holosteian fish, alongside the bowfins, which have a similar distribution.",
                 ImageFile = "gar.jpg"
             },
             new()
             {
-                Id=12,
+                Id=14,
                 Name = "Bull trout",
                 Description = "The bull trout (Salvelinus confluentus) is a char of the family Salmonidae native to northwestern North America. Historically, S. confluentus has been known as the \"Dolly Varden\" (S. malma), but was reclassified as a separate species in 1980. Populations of bull trout in the lower 48 states are listed as threatened under the U.S. Endangered Species Act, and bull trout overall are listed as vulnerable to extinction on the IUCN Red List of Threatened Species. The Saskatchewan-Nelson Rivers population in Alberta, Canada is listed as threatened under the Species at Risk Act.",
                 ImageFile = "bulltrout.jpg"
             },
             new()
             {
-                Id=13,
+                Id=15,
                 Name = "White perch",
                 Description = "The white perch (Morone americana) is not a true perch but is a fish of the temperate bass family, Moronidae, notable as a food and game fish in eastern North America. In some places it is referred to as \"Silver Bass\"",
                 ImageFile = "whiteperch.jpg"
             },
             new()
             {
-                Id=14,
+                Id=16,
                 Name = "Finetooth shark",
                 Description = "The finetooth shark (Carcharhinus isodon) is a species of requiem shark, in the family Carcharhinidae, found in the western Atlantic Ocean, from North Carolina to Brazil. It forms large schools in shallow, coastal waters, and migrates seasonally following warm water. A relatively small, slender-bodied shark, the finetooth shark can be identified by its needle-like teeth, dark blue-gray dorsal coloration, and long gill slits. It attains a maximum length of 1.9 m (6.2 ft). The diet of this species consists primarily of small bony fishes, in particular menhaden. Like other members of its family, it is viviparous with females giving birth to two to six pups in estuarine nursery areas every other year.",
                 ImageFile = "finetoothshark.jpg"
             },
             new()
             {
-                Id=15,
+                Id=17,
                 Name = "Northern redbelly dace",
                 Description = "The northern redbelly dace (Chrosomus eos) is a species of freshwater ray-finned fish belonging to the family Leuciscidae, which includes the daces, chubs and related fishes. These fishes are generally found in lakes and small streams in the northeastern United States and eastern Canada. Ranging from 1–3 inches, it is one of forty-four species from the minnow and carp family of Cyprinidae in these areas.",
                 ImageFile = "nredbellydance.jpg"
             },
             new()
             {
-                Id=16,
+                Id=18,
                 Name = "Ocean Pout",
                 Description = "The ocean pout (Zoarces americanus) is an eelpout in the family Zoarcidae. It is found in the Northwest Atlantic Ocean, off the coast of New England and eastern Canada. The fish has antifreeze proteins in its blood, giving it the ability to survive in near-freezing waters.",
                 ImageFile = "oceanpout.jpg"
