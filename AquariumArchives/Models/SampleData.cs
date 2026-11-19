@@ -87,7 +87,7 @@ namespace AquariumArchives.Models
             {
                 Id=12,
                 Name = "Giraffe Catfish",
-                Description = "The giraffe catfish Auchenoglanis occidentalis), or bubu, is a species of catfish found in Africa. It eats plants off the floor of lakes and streams. The diet of giraffe catfish is very dependent upon their environment. They keep an omnivorous diet but mainly eat insects present in the waters.",
+                Description = "The giraffe catfish (Auchenoglanis occidentalis), or bubu, is a species of catfish found in Africa. It eats plants off the floor of lakes and streams. The diet of giraffe catfish is very dependent upon their environment. They keep an omnivorous diet but mainly eat insects present in the waters.",
                 ImageFile = "giraffe-fish.jpg"
             },
             new()
@@ -131,6 +131,20 @@ namespace AquariumArchives.Models
                 Name = "Ocean Pout",
                 Description = "The ocean pout (Zoarces americanus) is an eelpout in the family Zoarcidae. It is found in the Northwest Atlantic Ocean, off the coast of New England and eastern Canada. The fish has antifreeze proteins in its blood, giving it the ability to survive in near-freezing waters.",
                 ImageFile = "oceanpout.jpg"
+            },
+            new()
+            {
+                Id=19,
+                Name = "Minnow",
+                Description = "Minnow is the common name for a number of species of small freshwater fish, belonging to several genera of the family Cyprinidae and in particular the subfamily Leuciscinae. They are also known in Ireland as pinkeens. While the common name can refer to a range of taxa, smaller fish in the subfamily Leusciscinae are considered by anglers to be \"true\" minnows.",
+                ImageFile = "minnow.jpg"
+            },
+            new()
+            {
+                Id=20,
+                Name = "Flagtail",
+                Description = "The flagtails (āhole or āholehole in the Hawaiian language) are a family (Kuhliidae) of centrarchiform ray-finned fish of the Indo-Pacific area. The family consists of 13 species in one genus, Kuhlia. Most are euryhaline and often found in brackish water, but the genus also includes species restricted to marine or fresh water. Several species are known as Hawaiian flagtails, particularly K. sandvicensis and K. xenura.",
+                ImageFile = "flagtail.jpg"
             }
         };
         public static List<string> Facts = new()
