@@ -145,6 +145,41 @@ namespace AquariumArchives.Models
                 Name = "Flagtail",
                 Description = "The flagtails (āhole or āholehole in the Hawaiian language) are a family (Kuhliidae) of centrarchiform ray-finned fish of the Indo-Pacific area. The family consists of 13 species in one genus, Kuhlia. Most are euryhaline and often found in brackish water, but the genus also includes species restricted to marine or fresh water. Several species are known as Hawaiian flagtails, particularly K. sandvicensis and K. xenura.",
                 ImageFile = "flagtail.jpg"
+            },
+            new()
+            {
+                Id=21,
+                Name = "Stingray",
+                Description = "Stingrays are a group of rays, a type of cartilaginous fish. They are classified in the suborder Myliobatoidei of the order Myliobatiformes and consist of eleven families. Stingrays are common in coastal tropical and subtropical marine waters throughout the world. Some species, such as the thorntail stingray (Dasyatis thetidis), are found in warmer temperate oceans and others, such as the deepwater stingray (Plesiobatis daviesi), are found in the deep ocean. The river stingrays and a number of whiptail stingrays (such as the Niger stingray (Fontitrygon garouaensis)) are restricted to fresh water. Most myliobatoids are demersal (inhabiting the next-to-lowest zone in the water column), but some, such as the pelagic stingray and the eagle rays, are pelagic.",
+                ImageFile = "stingray.jpg"
+            },
+            new()
+            {
+                Id=22,
+                Name = "Hammerhead Shark",
+                Description = "Hammerhead sharks are a group of sharks that form the family Sphyrnidae, named for the unusual and distinctive form of their heads, which are flattened and laterally extended into a cephalofoil (a T-shape or \"hammer\"). The shark's eyes are placed one on each end of this T-shaped structure, with their small mouths directly centered and underneath. Most hammerhead species are placed in the genus Sphyrna, while the winghead shark is placed in its own genus, Eusphyra. Many different—but not necessarily mutually exclusive—functions have been postulated for the cephalofoil, including sensory reception, manoeuvering, and prey manipulation. The cephalofoil gives the shark superior binocular vision and depth perception, as well as increased surface area for electroreceptors.",
+                ImageFile = "hammerheadshark.jpg"
+            },
+            new()
+            {
+                Id=23,
+                Name = "Pufferfish",
+                Description = "The pufferfish is a fish belonging to the family Tetraodontidae, commonly found in tropical and subtropical ocean waters. It’s known for its ability to inflate its body by swallowing water or air when threatened, making it appear larger to potential predators. Some species possess spines on their skin, and many contain tetrodotoxin, a potent neurotoxic that makes them highly poisonous.",
+                ImageFile = "pufferfish.jpg"
+            },
+            new()
+            {
+                Id=24,
+                Name = "Pumpkinseed",
+                Description = "The pumpkinseed (Lepomis gibbosus), also referred to as sun perch, pond perch, common sunfish, punkie, sunfish, sunny, and kivver, is a small to medium–sized freshwater fish of the genus Lepomis (true sunfishes), from the sunfish family (Centrarchidae) in the order Centrarchiformes. It is endemic to eastern North America.",
+                ImageFile = "pumpkinseed.jpg"
+            },
+            new()
+            {
+                Id=25,
+                Name = "Anchovy",
+                Description = "Anchovies are small, common forage fish of the family Engraulidae. Most species are found in marine waters, but several will enter brackish water, and some in South America are restricted to fresh water. More than 140 species are placed in 16 genera; they are found in the Atlantic, Indian and Pacific Oceans, and in the Black Sea and the Mediterranean Sea. Anchovies are usually classified as oily fish.",
+                ImageFile = "anchovy.jpg"
             }
         };
         public static List<string> Facts = new()
