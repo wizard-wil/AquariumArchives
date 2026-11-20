@@ -180,6 +180,41 @@ namespace AquariumArchives.Models
                 Name = "Anchovy",
                 Description = "Anchovies are small, common forage fish of the family Engraulidae. Most species are found in marine waters, but several will enter brackish water, and some in South America are restricted to fresh water. More than 140 species are placed in 16 genera; they are found in the Atlantic, Indian and Pacific Oceans, and in the Black Sea and the Mediterranean Sea. Anchovies are usually classified as oily fish.",
                 ImageFile = "anchovy.jpg"
+            },
+            new()
+            {
+                Id=26,
+                Name = "Clownfish",
+                Description = "Clownfish or anemonefishes (genus Amphiprion) are saltwater fish found in the warm and tropical waters of the Indo-Pacific. They mainly inhabit coral reefs and have a distinctive colouration typically consisting of white vertical bars on a red, orange, yellow, brown or black background. Clownfish developed a symbiotic and mutually beneficial relationship with sea anemones, on which they rely for shelter and protection from predators. In turn, clownfish protect the anemone from anemone-eating fish, as well as clean and fan them, and attract beneficial microorganisms with their waste.",
+                ImageFile = "clownfish.jpg"
+            },
+            new()
+            {
+                Id=27,
+                Name = "Rainbow Trout",
+                Description = "The rainbow trout (Oncorhynchus mykiss) is a species of trout native to cold-water tributaries of the Pacific Ocean in North America and Asia. The steelhead (sometimes called steelhead trout) is an anadromous (sea-run) form of the coastal rainbow trout (O. m. irideus) or Columbia River redband trout (O. m. gairdneri) that usually returns to freshwater to spawn after living two to three years in the ocean.",
+                ImageFile = "rainbowtrout.jpg"
+            },
+            new()
+            {
+                Id=28,
+                Name = "Swordfish",
+                Description = "The swordfish (Xiphias gladius), also known as the broadbill in some countries, are large, highly migratory predatory fish characterized by a long, flat, sword-like, pointed bill. They are the sole member of the family Xiphiidae. They are a popular sport fish of the billfish category. Swordfish are elongated, round-bodied, and lose all teeth and scales by adulthood. These fish are found widely in tropical and temperate parts of the Atlantic, Pacific, and Indian Oceans, and can typically be found from near the surface to a depth of 550 m (1,800 ft), and exceptionally up to depths of 2,878 m (9,442 ft). They commonly reach 3 m (10 ft) in length, and the maximum reported is 4.55 m (14 ft 11 in) in length and 650 kg (1,430 lb) in weight.",
+                ImageFile = "swordfish.jpg"
+            },
+            new()
+            {
+                Id=29,
+                Name = "Surgeonfish",
+                Description = "Surgeonfish are marine fish commonly found in tropical coral reefs. They are named after the sharp, blade-like spines near their tails, which they use for defense against predators. Surgeonfish are usually brightly colored, with patterns ranging from vibrant blues and yellows to greens and oranges. They primarily feed on algae, helping prevent algae from overgrowing coral reefs. They are active swimmers and are often found in groups.",
+                ImageFile = "surgeonfish.jpg"
+            },
+            new()
+            {
+                Id=30,
+                Name = "Anglerfish",
+                Description = "The anglerfish are ray-finned fish in the order Lophiiformes. Both the order's common and scientific name come from the characteristic mode of predation, in which a modified dorsal fin ray acts as a lure for prey (akin to a human angler, and this lure is also likened to a crest or \"lophos\"). The modified fin ray, with the very tip being the esca and the length of the structure the illicium, is adapted to attract specific prey items depending on the species, through the employment of different luring methods.",
+                ImageFile = "anglerfish.jpg"
             }
         };
         public static List<string> Facts = new()
